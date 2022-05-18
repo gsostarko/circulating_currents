@@ -48,3 +48,38 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.width', None)
 
 display(df)
+
+#Razlika potencija delta E
+
+matrica_razlike_napona = np.array(range(676)).reshape((26, 26))
+matrica_razlike_napona = matrica_razlike_napona.astype('float64')
+
+D_E = 0
+
+for i in range(len(lista_kuteva)):
+  for j in range(len(lista_kuteva)):
+    kut_alfa = float(lista_kuteva[i][j])
+    if kut_alfa > 180.0:
+      kut_alfa = np.abs(kut_alfa-360.0)
+    D_E = round(np.sin((kut_alfa/2.0)* np.pi/180)*U_sek*2.0, 4)
+    #print(D_E)
+    matrica_razlike_napona[i][j] = D_E
+
+df = pd.DataFrame(matrica_razlike_napona, columns= index, index=index).astype(float)
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
+pd.set_option('display.width', None)
+pd.set_option('display.precision', 4)
+#display(df)
+
+#df.style.set_properties(**{'background-color': 'white',
+                           #'color': 'black',
+                           #'border-color': 'black',
+                           #'border-width': '1px',
+                           #'border-style': 'solid'})
+
+df.style.apply(lambda x: ["background: orange" if v > 0 else "" for v in x], axis = 1)
+
+display(df)
+
+#print (df.dtypes)
