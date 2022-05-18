@@ -83,3 +83,45 @@ df.style.apply(lambda x: ["background: orange" if v > 0 else "" for v in x], axi
 display(df)
 
 #print (df.dtypes)
+
+#Struje izjednačenja
+
+matrica_str_izjed_posto = np.array(range(676)).reshape((26, 26))
+matrica_str_izjed_posto = matrica_str_izjed_posto.astype('float64')
+
+matrica_struje_izjednacenja = np.array(range(676)).reshape((26, 26))
+matrica_struje_izjednacenja = matrica_struje_izjednacenja.astype('float64')
+
+
+
+Ic = 0
+
+for i in range(len(matrica_razlike_napona)):
+  for j in range(len(matrica_razlike_napona)):
+    Delta_E = float(matrica_razlike_napona[i][j])
+    E_posto = Delta_E/U_sek*100
+
+    Ic_posto = round((E_posto * 100.0)/np.sqrt( (R_post*2)**2 + (Z_post*2)**2  ),2)
+    #print(Ic_posto)
+    matrica_str_izjed_posto[i][j] = Ic_posto
+
+    Ic = Ic_posto/100*I_sek
+
+    matrica_struje_izjednacenja[i][j] = round(Ic,1)
+    
+df = pd.DataFrame(matrica_str_izjed_posto, columns= index, index=index).astype(float)
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
+pd.set_option('display.width', None)
+pd.set_option('display.precision', 4)
+df.style.apply(lambda x: ["background: orange" if v > 0 else "" for v in x], axis = 1)
+#display(df)
+
+df = pd.DataFrame(matrica_struje_izjednacenja, columns= index, index=index).astype(float)
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
+pd.set_option('display.width', None)
+pd.set_option('display.precision', 1)
+df.style.set_caption("Stuja izjednačenja [A] u ovisnosti grupe spoja dva paralelna transformatora")
+df.style.apply(lambda x: ["background: orange" if v > 0 else "" for v in x], axis = 1)
+
