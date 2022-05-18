@@ -32,3 +32,9 @@ plt.xlim(-9,9)
 plt.ylim(-4,14)
 plt.grid()
 plt.show()
+
+# Creating PDF report (uncomment if you need to generate a report)
+#%%capture
+#!wget -nc https://raw.githubusercontent.com/brpy/colab-pdf/master/colab_pdf.py
+#from colab_pdf import colab_pdf
+#colab_pdf('struje_izjednacenja_grafovi.ipynb')
